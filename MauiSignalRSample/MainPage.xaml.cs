@@ -11,7 +11,7 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 
 		_connection = new HubConnectionBuilder()
-			.WithUrl("http://192.168.1.85:5296/chat")
+			.WithUrl("http://192.168.0.120:5296/chat")
 			.Build();
 
 		_connection.On<string>("MessageReceived", (message) =>
