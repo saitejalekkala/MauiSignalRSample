@@ -1,32 +1,90 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MauiSignalRSample.Converters"
              x:Class="MauiSignalRSample.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BoolToAlignmentConverter x:Key="BoolToAlignmentConverter" />
+            <local:BoolToColorConverter x:Key="BoolToColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-            <Label
-                x:Name="chatMessages"
+    <Grid Padding="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ScrollView Grid.Row="0">
+            <CollectionView x:Name="MessagesCollection">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame 
+                            Margin="5"
+                            Padding="10"
+                            CornerRadius="10"
+                            BackgroundColor="{Binding IsSent, Converter={StaticResource BoolToColorConverter}}">
+                            <Label 
+                                Text="{Binding Text}" 
+                                FontSize="18" 
+                                HorizontalOptions="{Binding IsSent, Converter={StaticResource BoolToAlignmentConverter}}" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <Entry
+                x:Name="passwordEntry"
+                Placeholder="Enter password"
+                IsPassword="True"
                 FontSize="18"
-                HorizontalOptions="Center" />
+                Grid.Column="0"
+                HorizontalOptions="Fill" />
+
+            <Button
+                x:Name="connectButton"
+                Text="Connect"
+                Clicked="OnConnectClicked"
+                Grid.Column="1"
+                HorizontalOptions="Fill" />
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
 
             <Entry
                 x:Name="myChatMessage"
                 Placeholder="Type your message"
                 FontSize="18"
-                HorizontalOptions="Center" />
+                IsEnabled="False"
+                Grid.Column="0"
+                HeightRequest="75"
+                HorizontalOptions="Fill" />
 
             <Button
                 x:Name="sendButton"
                 Text="Send"
                 Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+                IsEnabled="False"
+                Grid.Column="1"
+                HeightRequest="65"
+                HorizontalOptions="Fill" />
+        </Grid>
 
-        </VerticalStackLayout>
-    </ScrollView>
+    </Grid>
 
 </ContentPage>
