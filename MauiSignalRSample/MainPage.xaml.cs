@@ -17,7 +17,7 @@ public partial class MainPage : ContentPage
         MessagesCollection.ItemsSource = messages;
 
         _connection = new HubConnectionBuilder()
-            .WithUrl("http://192.168.0.120:5296/chat")
+            .WithUrl("http://52.66.240.38:5296/chat")
             .Build();
 
         _connection.On<string>("MessageReceived", (message) =>
